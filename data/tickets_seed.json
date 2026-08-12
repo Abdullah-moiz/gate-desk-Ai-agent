@@ -1,0 +1,418 @@
+[
+  {
+    "id": "T-1001",
+    "category": "billing",
+    "subject": "Charged twice for Starter plan",
+    "body": "I just noticed my card was charged $9 twice this month for my Starter subscription. Can you refund the duplicate charge?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "issue_refund",
+      "amount": 9,
+      "severity": null,
+      "reason": "Duplicate billing error, refund amount under $20 auto-approval threshold."
+    }
+  },
+  {
+    "id": "T-1002",
+    "category": "billing",
+    "subject": "Want refund on annual Business upgrade",
+    "body": "I upgraded to the annual Business plan 5 days ago and changed my mind. I'd like a full refund of the $790 charge.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": 790,
+      "severity": null,
+      "reason": "Refund amount exceeds $20 auto-approval threshold and involves an annual contract; escalated to human support lead who approved the refund."
+    }
+  },
+  {
+    "id": "T-1003",
+    "category": "billing",
+    "subject": "Still billed at old rate after downgrading",
+    "body": "I downgraded from Pro to Starter last week but my card was just charged the Pro rate again. Is this a mistake?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Downgrades take effect at the start of the next billing period per policy; customer was billed correctly, no refund owed."
+    }
+  },
+  {
+    "id": "T-1004",
+    "category": "billing",
+    "subject": "Threatening chargeback over unrecognized charge",
+    "body": "There's a $29 charge on my card I don't recognize. If this isn't sorted out today I'm filing a chargeback with my bank.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": 29,
+      "severity": null,
+      "reason": "Customer mentioned intent to file a chargeback; escalated to Finance per policy rather than processing a standard refund."
+    }
+  },
+  {
+    "id": "T-1005",
+    "category": "billing",
+    "subject": "New card declined, need to update payment method",
+    "body": "My new card keeps getting declined when I try to update my payment info. How do I fix this?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Pointed customer to Settings > Billing > Payment Methods self-serve flow."
+    }
+  },
+  {
+    "id": "T-1006",
+    "category": "billing",
+    "subject": "Early cancellation of annual Pro, wants prorated refund",
+    "body": "I've been on the annual Pro plan for 3 months and want to cancel now. Can I get a prorated refund for the remaining months?",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": 290,
+      "severity": null,
+      "reason": "Any refund request involving an annual contract is escalated regardless of amount; human lead calculated the prorated refund minus the 10% early-cancellation fee."
+    }
+  },
+  {
+    "id": "T-1007",
+    "category": "billing",
+    "subject": "Enterprise onboarding was botched, wants a refund",
+    "body": "Our Enterprise onboarding this month was a disaster and we'd like a partial refund for the month.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Enterprise refund requests are always routed to the customer's dedicated account manager, never handled by general support."
+    }
+  },
+  {
+    "id": "T-1008",
+    "category": "billing",
+    "subject": "Double charged for Starter plan again",
+    "body": "This is the second time this has happened - charged $9 twice in one billing cycle for Starter. Please refund the extra charge.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "issue_refund",
+      "amount": 9,
+      "severity": null,
+      "reason": "Duplicate billing error, refund amount under $20 auto-approval threshold."
+    }
+  },
+  {
+    "id": "T-1101",
+    "category": "account",
+    "subject": "Forgot password, need reset link",
+    "body": "I can't remember my password and the reset email isn't arriving. Can you send it to the email on my account?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "send_password_reset",
+      "amount": null,
+      "severity": null,
+      "reason": "Email on file matched the account, low-risk auto-approved action."
+    }
+  },
+  {
+    "id": "T-1102",
+    "category": "account",
+    "subject": "Wants 2FA turned off to log back in",
+    "body": "I'm locked out because I lost my 2FA device. Can you just disable 2FA on my account so I can get back in?",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "2FA can never be disabled by a support agent; escalated to Security team for identity verification."
+    }
+  },
+  {
+    "id": "T-1103",
+    "category": "account",
+    "subject": "Locked out after failed logins",
+    "body": "I got locked out after typing my password wrong a few times. Can you unlock my account? I've verified my email is on file.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "unlock_account",
+      "amount": null,
+      "severity": null,
+      "reason": "Identity verified via email on file, auto-approved unlock."
+    }
+  },
+  {
+    "id": "T-1104",
+    "category": "account",
+    "subject": "Team member requesting ownership transfer",
+    "body": "I'm a team member on the Acme account and I'd like to be made the account owner instead of our current owner.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Requester's email is not on file as the account owner; escalated rather than acted on directly."
+    }
+  },
+  {
+    "id": "T-1105",
+    "category": "account",
+    "subject": "Wants a copy of all their data",
+    "body": "Before I decide whether to keep my subscription, I'd like a full export of my data.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Pointed customer to the self-serve Settings > Export flow."
+    }
+  },
+  {
+    "id": "T-1106",
+    "category": "account",
+    "subject": "Demanding immediate account and data deletion",
+    "body": "Delete my account and all my data right now, this is a GDPR request and I want it done today.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Account/data deletion is irreversible and always routed to Compliance team, regardless of urgency expressed by the customer."
+    }
+  },
+  {
+    "id": "T-1107",
+    "category": "account",
+    "subject": "Removing a departed employee's seat",
+    "body": "One of our team members left the company, how do I remove their seat so we're not paying for it?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Self-serve action via Settings > Team > Remove Member, low risk."
+    }
+  },
+  {
+    "id": "T-1108",
+    "category": "account",
+    "subject": "Unrecognized login from new location",
+    "body": "I got an alert about a login from a country I've never been to. I'm worried my account has been compromised.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Suspected account compromise, escalated to Security rather than treated as a routine account question."
+    }
+  },
+  {
+    "id": "T-1201",
+    "category": "bug",
+    "subject": "Export button slightly misaligned on Safari",
+    "body": "Small visual issue: the 'export to PDF' button overlaps the title a bit when I use Safari. Not urgent.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "log_bug",
+      "amount": null,
+      "severity": "P3",
+      "reason": "Cosmetic issue affecting one user, logged only, no escalation needed."
+    }
+  },
+  {
+    "id": "T-1202",
+    "category": "bug",
+    "subject": "Automations stopped firing after update",
+    "body": "My automation rules stopped triggering after the last product update. Is there a workaround while this gets fixed?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "provide_workaround",
+      "amount": null,
+      "severity": "P2",
+      "reason": "Known workaround (recreate the automation rule) exists; logged to engineering backlog, workaround shared with customer."
+    }
+  },
+  {
+    "id": "T-1203",
+    "category": "bug",
+    "subject": "Entire project board disappeared",
+    "body": "A project board with 3 months of our team's work just vanished. We need this back immediately.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P0",
+      "reason": "Potential data loss, escalated to engineering immediately, never auto-closed."
+    }
+  },
+  {
+    "id": "T-1204",
+    "category": "bug",
+    "subject": "SSO broken for entire organization",
+    "body": "Nobody on our team can log in this morning, SSO is throwing an error for everyone in our Business org.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P1",
+      "reason": "Feature completely broken for a whole team, escalated to engineering within SLA window."
+    }
+  },
+  {
+    "id": "T-1205",
+    "category": "bug",
+    "subject": "Boards loading slowly, only for me",
+    "body": "My boards have been taking 10+ seconds to load the past two days, but my teammates say it's fine for them.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "request_more_info",
+      "amount": null,
+      "severity": null,
+      "reason": "Not enough detail to classify severity (single user, unclear cause); asked for browser/OS and network details before escalating."
+    }
+  },
+  {
+    "id": "T-1206",
+    "category": "bug",
+    "subject": "Custom API rate limit not being honored",
+    "body": "Our Enterprise account has a custom rate limit configured but we're still getting 429 errors well below that threshold.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P1",
+      "reason": "Enterprise custom configuration issue beyond generic troubleshooting, escalated to engineering."
+    }
+  },
+  {
+    "id": "T-1207",
+    "category": "bug",
+    "subject": "Mobile app crashing on launch for multiple users",
+    "body": "Several people on our Business team have had the mobile app crash immediately on launch since the latest update.",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P1",
+      "reason": "Multiple users affected on one org, escalated to engineering."
+    }
+  },
+  {
+    "id": "T-1208",
+    "category": "bug",
+    "subject": "Typo in reminder email",
+    "body": "Small thing, but the reminder email says 'recieve' instead of 'receive'.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "log_bug",
+      "amount": null,
+      "severity": "P3",
+      "reason": "Cosmetic, low impact, logged only."
+    }
+  },
+  {
+    "id": "T-1301",
+    "category": "general",
+    "subject": "How do I invite my team?",
+    "body": "New to Flowbase, how do I invite the rest of my team to our workspace?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Answered directly from FAQ, Settings > Team > Invite by email."
+    }
+  },
+  {
+    "id": "T-1302",
+    "category": "general",
+    "subject": "What's the API rate limit on Pro?",
+    "body": "Quick question - does the API have a rate limit on the Pro plan?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Answered directly from FAQ: 1000 requests/hour on Pro."
+    }
+  },
+  {
+    "id": "T-1303",
+    "category": "general",
+    "subject": "Is there a permanent free plan?",
+    "body": "Can I keep using Flowbase for free forever if I don't need many features?",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Answered directly from FAQ: no permanent free tier, only the 14-day Pro trial."
+    }
+  },
+  {
+    "id": "T-1304",
+    "category": "general",
+    "subject": "Loving the new dashboard",
+    "body": "Just wanted to say the new dashboard redesign is great, nice work team!",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "acknowledge",
+      "amount": null,
+      "severity": null,
+      "reason": "Positive feedback, no action needed, thanked the customer and closed."
+    }
+  },
+  {
+    "id": "T-1305",
+    "category": "general",
+    "subject": "Feature request: dark mode",
+    "body": "Any plans to add a dark mode? Would love to see that added.",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "acknowledge",
+      "amount": null,
+      "severity": null,
+      "reason": "Logged as a feature request, thanked customer, not urgent or bug-related so no escalation."
+    }
+  },
+  {
+    "id": "T-1306",
+    "category": "general",
+    "subject": "Asking about SLA credit after outage",
+    "body": "We had downtime last week on our Business plan. Do we qualify for a service credit?",
+    "resolution": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "SLA credit calculations require incident data outside the support system, always escalated to a human."
+    }
+  },
+  {
+    "id": "T-1307",
+    "category": "general",
+    "subject": "my team no see task fast fix",
+    "body": "hi pls help my team cannot see task on board fast fix thanks",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "request_more_info",
+      "amount": null,
+      "severity": null,
+      "reason": "Too ambiguous to act on (could be permissions, sync, or bug); asked a clarifying question rather than guessing or escalating prematurely."
+    }
+  },
+  {
+    "id": "T-1308",
+    "category": "general",
+    "subject": "Unrelated marketing email sent to support",
+    "body": "Hi, we'd love to offer your company a bulk discount on office furniture, let us know if interested!",
+    "resolution": {
+      "outcome": "auto_resolved",
+      "action": "close_spam",
+      "amount": null,
+      "severity": null,
+      "reason": "Not a genuine support request, closed as spam/not applicable, no action needed."
+    }
+  }
+]

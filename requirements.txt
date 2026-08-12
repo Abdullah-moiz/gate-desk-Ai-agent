@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+openai
+voyageai
+qdrant-client
+psycopg2-binary
+streamlit
+python-dotenv
+pydantic

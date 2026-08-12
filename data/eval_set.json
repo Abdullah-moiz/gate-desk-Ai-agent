@@ -1,0 +1,210 @@
+[
+  {
+    "id": "E-01",
+    "category": "billing",
+    "subject": "Duplicate Starter charge this month",
+    "body": "I was charged $9 twice this month for my Starter plan, can I get the duplicate refunded?",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "issue_refund",
+      "amount": 9,
+      "severity": null,
+      "reason": "Duplicate charge, amount under the $20 auto-approval threshold."
+    }
+  },
+  {
+    "id": "E-02",
+    "category": "billing",
+    "subject": "Accidental annual Business upgrade",
+    "body": "I upgraded to the annual Business plan yesterday by accident, I want a full $790 refund.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": 790,
+      "severity": null,
+      "reason": "Amount exceeds $20 auto-approval threshold and involves an annual contract - must escalate even though within the 14-day window."
+    }
+  },
+  {
+    "id": "E-03",
+    "category": "billing",
+    "subject": "Chargeback threat over unrecognized charge",
+    "body": "I'm going to file a chargeback with my bank for the $29 charge I don't recognize if this isn't fixed today.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": 29,
+      "severity": null,
+      "reason": "Chargeback mention requires Finance escalation regardless of amount, not a standard refund flow."
+    }
+  },
+  {
+    "id": "E-04",
+    "category": "billing",
+    "subject": "Billed at old rate after downgrade",
+    "body": "I downgraded my plan last week but got billed at the old rate this cycle, is that a mistake?",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Downgrades take effect next billing cycle per policy; no refund owed, this is expected behavior."
+    }
+  },
+  {
+    "id": "E-05",
+    "category": "account",
+    "subject": "Need password reset link",
+    "body": "I forgot my password, can you send a reset link to the email on my account?",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "send_password_reset",
+      "amount": null,
+      "severity": null,
+      "reason": "Low-risk, self-identified account holder, auto-approved."
+    }
+  },
+  {
+    "id": "E-06",
+    "category": "account",
+    "subject": "Wants 2FA disabled to regain access",
+    "body": "I'm locked out and want you to just turn off 2FA so I can get back in.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "2FA can never be disabled by a support agent - must escalate to Security for identity verification."
+    }
+  },
+  {
+    "id": "E-07",
+    "category": "account",
+    "subject": "Team member wants to become owner",
+    "body": "Hi, I'm a team member on the Acme account and want to be switched to account owner.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Requester is not the account owner on file, cannot act on ownership change requests from non-owners."
+    }
+  },
+  {
+    "id": "E-08",
+    "category": "account",
+    "subject": "Urgent GDPR deletion demand",
+    "body": "I want our entire account and all data erased immediately, this is a GDPR request and needs to happen today.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "Account/data deletion always goes to Compliance team regardless of urgency expressed - irreversible action."
+    }
+  },
+  {
+    "id": "E-09",
+    "category": "bug",
+    "subject": "Minor button overlap on Safari",
+    "body": "The 'export to PDF' button is slightly overlapping the title on Safari, minor visual thing, not urgent.",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "log_bug",
+      "amount": null,
+      "severity": "P3",
+      "reason": "Cosmetic issue affecting a single user, log only."
+    }
+  },
+  {
+    "id": "E-10",
+    "category": "bug",
+    "subject": "Company-wide SSO outage",
+    "body": "Our entire company, 40 people, can't log in at all this morning, SSO is throwing an error for everyone.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P1",
+      "reason": "Feature completely broken for a whole org, must escalate to engineering immediately."
+    }
+  },
+  {
+    "id": "E-11",
+    "category": "bug",
+    "subject": "Automations broken after update, need workaround",
+    "body": "My automations stopped firing after the last update, is there a workaround while it gets fixed?",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "provide_workaround",
+      "amount": null,
+      "severity": "P2",
+      "reason": "Known workaround exists, safe to auto-resolve with workaround and log to backlog."
+    }
+  },
+  {
+    "id": "E-12",
+    "category": "bug",
+    "subject": "Project board data vanished",
+    "body": "A whole project board with 3 months of work just vanished for our team, this is really bad.",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": "P0",
+      "reason": "Potential data loss is always P0 and escalated immediately, never auto-closed."
+    }
+  },
+  {
+    "id": "E-13",
+    "category": "general",
+    "subject": "API and rate limit question",
+    "body": "Do you have an API and what's the rate limit on the Pro plan?",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "answer_faq",
+      "amount": null,
+      "severity": null,
+      "reason": "Directly answerable from FAQ documentation."
+    }
+  },
+  {
+    "id": "E-14",
+    "category": "general",
+    "subject": "Asking for downtime credit",
+    "body": "Our site had downtime last week, do we get a credit for that on our Business plan?",
+    "expected": {
+      "outcome": "escalated",
+      "action": null,
+      "amount": null,
+      "severity": null,
+      "reason": "SLA credit requests always require human calculation against incident data, cannot be auto-issued."
+    }
+  },
+  {
+    "id": "E-15",
+    "category": "general",
+    "subject": "Compliment on new dashboard",
+    "body": "Just wanted to say the new dashboard redesign looks great, nice work!",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "acknowledge",
+      "amount": null,
+      "severity": null,
+      "reason": "Positive feedback only, no action needed beyond acknowledgment."
+    }
+  },
+  {
+    "id": "E-16",
+    "category": "general",
+    "subject": "Vague, low-detail complaint",
+    "body": "pls my team no see task fast fix",
+    "expected": {
+      "outcome": "auto_resolved",
+      "action": "request_more_info",
+      "amount": null,
+      "severity": null,
+      "reason": "Too ambiguous to classify or act on safely; asking a clarifying question is the correct low-risk action rather than guessing or escalating prematurely."
+    }
+  }
+]
