@@ -1,36 +1,24 @@
 """
-Chunk policy docs + seed tickets, embed via Voyage AI, upsert into Qdrant.
-Idempotent: each run recreates both collections from scratch, so it's safe
-to re-run after editing data/policy_docs/*.md or data/tickets_seed.json.
+Chunk policy docs + seed tickets, embed (dense via Voyage AI, sparse via local
+BM25) and upsert into Qdrant. Idempotent: each run recreates both collections
+from scratch, so it's safe to re-run after editing data/policy_docs/*.md or
+data/tickets_seed.json.
 """
 
 import json
-import os
 import re
-import uuid
+import sys
 from pathlib import Path
 
-import voyageai
-from dotenv import load_dotenv
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, VectorParams
+from qdrant_client.models import Distance, Modifier, PointStruct, SparseVectorParams, VectorParams
 
-ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(ROOT / ".env")
+from app.config import DENSE_DIM, POLICY_COLLECTION, QDRANT_URL, ROOT, TICKETS_COLLECTION
+from app.embeddings import dense_embed, sparse_embed_documents
 
-EMBED_MODEL = "voyage-4-lite"
-EMBED_DIM = 1024
-BATCH_SIZE = 64
-NAMESPACE = uuid.UUID("12345678-1234-5678-1234-567812345678")
-
-voyage = voyageai.Client(api_key=os.environ["VOYAGE_API_KEY"])
-qdrant = QdrantClient(url=os.environ.get("QDRANT_URL", "http://localhost:6333"))
-
-
-def deterministic_id(*parts: str) -> str:
-    """Stable UUID from content-derived parts so re-running the script upserts
-    the same points instead of accumulating duplicates."""
-    return str(uuid.uuid5(NAMESPACE, "::".join(parts)))
+qdrant = QdrantClient(url=QDRANT_URL)
 
 
 def chunk_policy_doc(path: Path) -> list[dict]:
@@ -78,21 +66,13 @@ def chunk_policy_doc(path: Path) -> list[dict]:
     ]
 
 
-def embed(texts: list[str], input_type: str) -> list[list[float]]:
-    embeddings: list[list[float]] = []
-    for i in range(0, len(texts), BATCH_SIZE):
-        batch = texts[i : i + BATCH_SIZE]
-        result = voyage.embed(batch, model=EMBED_MODEL, input_type=input_type)
-        embeddings.extend(result.embeddings)
-    return embeddings
-
-
 def recreate_collection(name: str) -> None:
     if qdrant.collection_exists(name):
         qdrant.delete_collection(name)
     qdrant.create_collection(
         collection_name=name,
-        vectors_config=VectorParams(size=EMBED_DIM, distance=Distance.COSINE),
+        vectors_config={"dense": VectorParams(size=DENSE_DIM, distance=Distance.COSINE)},
+        sparse_vectors_config={"sparse": SparseVectorParams(modifier=Modifier.IDF)},
     )
 
 
@@ -103,19 +83,21 @@ def index_policy_docs() -> None:
         all_chunks.extend(chunk_policy_doc(path))
 
     print(f"Chunked {len(all_chunks)} sections from {docs_dir}")
-    embeddings = embed([c["text"] for c in all_chunks], input_type="document")
+    texts = [c["text"] for c in all_chunks]
+    dense_vecs = dense_embed(texts, input_type="document")
+    sparse_vecs = sparse_embed_documents(texts)
 
-    recreate_collection("policy_kb")
+    recreate_collection(POLICY_COLLECTION)
     points = [
         PointStruct(
-            id=deterministic_id("policy_kb", c["source"], c["section"]),
-            vector=vec,
+            id=str(uuid5(f"{POLICY_COLLECTION}::{c['source']}::{c['section']}")),
+            vector={"dense": dense_vec, "sparse": sparse_vec},
             payload=c,
         )
-        for c, vec in zip(all_chunks, embeddings)
+        for c, dense_vec, sparse_vec in zip(all_chunks, dense_vecs, sparse_vecs)
     ]
-    qdrant.upsert(collection_name="policy_kb", points=points)
-    print(f"Indexed {len(points)} policy chunks into 'policy_kb'")
+    qdrant.upsert(collection_name=POLICY_COLLECTION, points=points)
+    print(f"Indexed {len(points)} policy chunks into '{POLICY_COLLECTION}'")
 
 
 def index_resolved_tickets() -> None:
@@ -123,19 +105,27 @@ def index_resolved_tickets() -> None:
     texts = [f"{t['subject']}\n{t['body']}" for t in tickets]
 
     print(f"Embedding {len(tickets)} resolved tickets")
-    embeddings = embed(texts, input_type="document")
+    dense_vecs = dense_embed(texts, input_type="document")
+    sparse_vecs = sparse_embed_documents(texts)
 
-    recreate_collection("resolved_tickets")
+    recreate_collection(TICKETS_COLLECTION)
     points = [
         PointStruct(
-            id=deterministic_id("resolved_tickets", t["id"]),
-            vector=vec,
+            id=str(uuid5(f"{TICKETS_COLLECTION}::{t['id']}")),
+            vector={"dense": dense_vec, "sparse": sparse_vec},
             payload=t,
         )
-        for t, vec in zip(tickets, embeddings)
+        for t, dense_vec, sparse_vec in zip(tickets, dense_vecs, sparse_vecs)
     ]
-    qdrant.upsert(collection_name="resolved_tickets", points=points)
-    print(f"Indexed {len(points)} resolved tickets into 'resolved_tickets'")
+    qdrant.upsert(collection_name=TICKETS_COLLECTION, points=points)
+    print(f"Indexed {len(points)} resolved tickets into '{TICKETS_COLLECTION}'")
+
+
+def uuid5(key: str) -> str:
+    import uuid
+
+    namespace = uuid.UUID("12345678-1234-5678-1234-567812345678")
+    return str(uuid.uuid5(namespace, key))
 
 
 if __name__ == "__main__":

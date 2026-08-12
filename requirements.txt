@@ -3,6 +3,7 @@ uvicorn[standard]
 openai
 voyageai
 qdrant-client
+fastembed
 psycopg2-binary
 streamlit
 python-dotenv
