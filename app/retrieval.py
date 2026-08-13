@@ -47,6 +47,24 @@ def _hybrid_search(
     return [{"id": h.id, "score": h.score, "payload": h.payload} for h in hits]
 
 
+def _dense_top_score(collection: str, dense_vec: list[float], query_filter: Filter | None) -> float:
+    """Raw dense cosine similarity of the single best match — unlike the RRF
+    fusion score used for ranking, this is bounded and actually reflects
+    semantic relevance, which is what Phase 6's confidence gate needs. RRF
+    scores are a function of *rank*, so the top hit scores ~1.0 even when
+    nothing relevant was retrieved; cosine similarity doesn't have that
+    problem."""
+    hits = _qdrant.query_points(
+        collection_name=collection,
+        query=dense_vec,
+        using="dense",
+        query_filter=query_filter,
+        limit=1,
+        with_payload=False,
+    ).points
+    return hits[0].score if hits else 0.0
+
+
 def _policy_filter(category: str | None) -> Filter | None:
     if category and category in CATEGORY_DOC_TYPES:
         return Filter(must=[FieldCondition(key="doc_type", match=MatchAny(any=CATEGORY_DOC_TYPES[category]))])
@@ -85,22 +103,30 @@ def retrieve_precedent(
 
 def retrieve(
     query_text: str, category: str | None = None, top_k: int = 5, ticket_id: str | None = None
-) -> dict[str, list[dict]]:
+) -> dict:
     """Embeds the query once (1 Voyage call + 1 local BM25 call) and searches
     both collections with the same vectors — this is what the agent (Phase 5)
-    should call per ticket, rather than retrieve_policy()+retrieve_precedent()."""
+    should call per ticket, rather than retrieve_policy()+retrieve_precedent().
+
+    Also returns policy_confidence/precedent_confidence (raw dense cosine
+    similarity of the top hit in each collection) for Phase 6's gate."""
     dense_vec = dense_embed([query_text], input_type="query")[0]
     sparse_vec = sparse_embed_query(query_text)
+    policy_filter = _policy_filter(category)
+    precedent_filter = _precedent_filter(category)
 
-    policy_results = _hybrid_search(POLICY_COLLECTION, dense_vec, sparse_vec, _policy_filter(category), top_k)
+    policy_results = _hybrid_search(POLICY_COLLECTION, dense_vec, sparse_vec, policy_filter, top_k)
     log_retrieval(ticket_id, POLICY_COLLECTION, query_text, category, policy_results)
 
-    precedent_results = _hybrid_search(
-        TICKETS_COLLECTION, dense_vec, sparse_vec, _precedent_filter(category), top_k
-    )
+    precedent_results = _hybrid_search(TICKETS_COLLECTION, dense_vec, sparse_vec, precedent_filter, top_k)
     log_retrieval(ticket_id, TICKETS_COLLECTION, query_text, category, precedent_results)
 
-    return {"policy": policy_results, "precedent": precedent_results}
+    return {
+        "policy": policy_results,
+        "precedent": precedent_results,
+        "policy_confidence": _dense_top_score(POLICY_COLLECTION, dense_vec, policy_filter),
+        "precedent_confidence": _dense_top_score(TICKETS_COLLECTION, dense_vec, precedent_filter),
+    }
 
 
 if __name__ == "__main__":

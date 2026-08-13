@@ -61,7 +61,18 @@ def check_subscription_status(account_id: str) -> dict:
     }
 
 
+def _account_error(account_id: str) -> dict:
+    return {
+        "error": (
+            f"Unknown account_id '{account_id}'. This must be a real account_id, not an email — "
+            "call lookup_account first to resolve one."
+        )
+    }
+
+
 def issue_refund(account_id: str, amount: float, reason: str) -> dict:
+    if account_id not in _ACCOUNTS:
+        return {"approved": False, **_account_error(account_id)}
     if amount > REFUND_AUTO_APPROVE_LIMIT:
         return {
             "approved": False,
@@ -74,10 +85,14 @@ def issue_refund(account_id: str, amount: float, reason: str) -> dict:
 
 
 def send_password_reset(account_id: str) -> dict:
+    if account_id not in _ACCOUNTS:
+        return {"sent": False, **_account_error(account_id)}
     return {"sent": True, "account_id": account_id}
 
 
 def unlock_account(account_id: str) -> dict:
+    if account_id not in _ACCOUNTS:
+        return {"unlocked": False, **_account_error(account_id)}
     return {"unlocked": True, "account_id": account_id}
 
 
@@ -269,3 +284,25 @@ SCHEMAS = {
         },
     },
 }
+
+# Phase 6: every terminal tool except escalate_to_human must self-report a
+# confidence score — escalating is already the safe default, so gating it
+# on confidence would be pointless. Injected here rather than repeated in
+# every schema above so the description has one source of truth.
+CONFIDENCE_REQUIRED_TOOLS = TERMINAL_TOOLS - {"escalate_to_human"}
+
+_CONFIDENCE_PROPERTY = {
+    "type": "number",
+    "minimum": 0,
+    "maximum": 1,
+    "description": (
+        "Your confidence (0.0-1.0) that this is the correct action, based strictly on the "
+        "policy excerpts and precedent provided. Use a lower value when policy is ambiguous, "
+        "precedent conflicts, or you are inferring beyond what's explicitly stated."
+    ),
+}
+
+for _name in CONFIDENCE_REQUIRED_TOOLS:
+    _params = SCHEMAS[_name]["parameters"]
+    _params["properties"]["confidence"] = _CONFIDENCE_PROPERTY
+    _params.setdefault("required", []).append("confidence")
