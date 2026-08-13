@@ -10,6 +10,7 @@ from typing import Literal
 from openai import OpenAI
 from pydantic import BaseModel
 
+from app import usage
 from app.config import CATEGORY_DOC_TYPES, CATEGORY_TOOLS, CLASSIFY_MODEL, OPENAI_API_KEY
 
 _client = OpenAI(api_key=OPENAI_API_KEY)
@@ -61,6 +62,7 @@ def classify(subject: str, body: str) -> TicketClassification:
         response_format=TicketClassification,
         reasoning_effort="low",
     )
+    usage.record(CLASSIFY_MODEL, completion.usage)
     result = completion.choices[0].message.parsed
     if result is None:
         raise ValueError(f"Classification failed: {completion.choices[0].message.refusal}")

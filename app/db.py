@@ -105,6 +105,74 @@ def clear_ticket_trace(ticket_id: str) -> None:
         conn.commit()
 
 
+def _rows_as_dicts(cur) -> list[dict]:
+    cols = [d.name for d in cur.description]
+    return [dict(zip(cols, row)) for row in cur.fetchall()]
+
+
+def list_tickets() -> list[dict]:
+    """Ticket queue for scripts/trace.py and app/dashboard.py — one row per
+    ticket with its latest resolution (if any) joined in."""
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT t.ticket_id, t.subject, t.category, t.urgency, t.customer_email, t.created_at,
+                   r.outcome, r.action
+            FROM tickets t
+            LEFT JOIN resolutions r ON r.ticket_id = t.ticket_id
+            ORDER BY t.created_at DESC
+            """
+        )
+        return _rows_as_dicts(cur)
+
+
+def get_ticket(ticket_id: str) -> dict | None:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT subject, body, customer_email, category, urgency, created_at FROM tickets WHERE ticket_id = %s",
+            (ticket_id,),
+        )
+        rows = _rows_as_dicts(cur)
+        return rows[0] if rows else None
+
+
+def get_retrievals(ticket_id: str) -> list[dict]:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT collection_name, result_rank, point_id, score, payload
+            FROM retrievals WHERE ticket_id = %s
+            ORDER BY collection_name, result_rank
+            """,
+            (ticket_id,),
+        )
+        return _rows_as_dicts(cur)
+
+
+def get_tool_calls(ticket_id: str) -> list[dict]:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT step, tool_name, arguments, result FROM tool_calls WHERE ticket_id = %s ORDER BY step",
+            (ticket_id,),
+        )
+        return _rows_as_dicts(cur)
+
+
+def get_resolution(ticket_id: str) -> dict | None:
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT outcome, action, arguments, result,
+                   agent_action, agent_arguments, agent_result, agent_confidence,
+                   policy_confidence, precedent_confidence, gate_passed, gate_reason
+            FROM resolutions WHERE ticket_id = %s
+            """,
+            (ticket_id,),
+        )
+        rows = _rows_as_dicts(cur)
+        return rows[0] if rows else None
+
+
 def log_retrieval(
     ticket_id: str | None,
     collection_name: str,

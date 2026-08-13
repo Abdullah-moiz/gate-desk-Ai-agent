@@ -17,6 +17,7 @@ import json
 
 from openai import OpenAI
 
+from app import usage
 from app.config import AGENT_MODEL, MAX_AGENT_TURNS, OPENAI_API_KEY
 from app.db import clear_ticket_trace, init_schema, save_resolution, save_ticket, save_tool_call
 from app.gate import apply_gate
@@ -134,6 +135,7 @@ def handle_ticket(ticket: dict) -> dict:
             input=input_items,
             tools=tools,
         )
+        usage.record(AGENT_MODEL, response.usage)
         input_items.extend(item.model_dump(exclude_none=True) for item in response.output)
 
         calls = [item for item in response.output if item.type == "function_call"]
