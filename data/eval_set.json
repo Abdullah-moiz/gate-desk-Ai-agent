@@ -10,7 +10,8 @@
       "amount": 9,
       "severity": null,
       "reason": "Duplicate charge, amount under the $20 auto-approval threshold."
-    }
+    },
+    "customer_email": "alice@acme.io"
   },
   {
     "id": "E-02",
@@ -23,7 +24,8 @@
       "amount": 790,
       "severity": null,
       "reason": "Amount exceeds $20 auto-approval threshold and involves an annual contract - must escalate even though within the 14-day window."
-    }
+    },
+    "customer_email": "bob@globex.com"
   },
   {
     "id": "E-03",
@@ -36,7 +38,8 @@
       "amount": 29,
       "severity": null,
       "reason": "Chargeback mention requires Finance escalation regardless of amount, not a standard refund flow."
-    }
+    },
+    "customer_email": "carol@initech.com"
   },
   {
     "id": "E-04",
@@ -49,7 +52,8 @@
       "amount": null,
       "severity": null,
       "reason": "Downgrades take effect next billing cycle per policy; no refund owed, this is expected behavior."
-    }
+    },
+    "customer_email": "dave@umbrella.co"
   },
   {
     "id": "E-05",
@@ -62,7 +66,8 @@
       "amount": null,
       "severity": null,
       "reason": "Low-risk, self-identified account holder, auto-approved."
-    }
+    },
+    "customer_email": "erin@wayne.com"
   },
   {
     "id": "E-06",
@@ -75,7 +80,8 @@
       "amount": null,
       "severity": null,
       "reason": "2FA can never be disabled by a support agent - must escalate to Security for identity verification."
-    }
+    },
+    "customer_email": "frank@stark.com"
   },
   {
     "id": "E-07",
@@ -88,7 +94,8 @@
       "amount": null,
       "severity": null,
       "reason": "Requester is not the account owner on file, cannot act on ownership change requests from non-owners."
-    }
+    },
+    "customer_email": "grace@wonka.com"
   },
   {
     "id": "E-08",
@@ -101,7 +108,8 @@
       "amount": null,
       "severity": null,
       "reason": "Account/data deletion always goes to Compliance team regardless of urgency expressed - irreversible action."
-    }
+    },
+    "customer_email": "heidi@oscorp.com"
   },
   {
     "id": "E-09",
@@ -114,7 +122,8 @@
       "amount": null,
       "severity": "P3",
       "reason": "Cosmetic issue affecting a single user, log only."
-    }
+    },
+    "customer_email": "ivan@hooli.com"
   },
   {
     "id": "E-10",
@@ -127,7 +136,8 @@
       "amount": null,
       "severity": "P1",
       "reason": "Feature completely broken for a whole org, must escalate to engineering immediately."
-    }
+    },
+    "customer_email": "judy@piedpiper.com"
   },
   {
     "id": "E-11",
@@ -140,7 +150,8 @@
       "amount": null,
       "severity": "P2",
       "reason": "Known workaround exists, safe to auto-resolve with workaround and log to backlog."
-    }
+    },
+    "customer_email": "kevin@aviato.com"
   },
   {
     "id": "E-12",
@@ -153,7 +164,8 @@
       "amount": null,
       "severity": "P0",
       "reason": "Potential data loss is always P0 and escalated immediately, never auto-closed."
-    }
+    },
+    "customer_email": "laura@bluth.com"
   },
   {
     "id": "E-13",
@@ -166,11 +178,12 @@
       "amount": null,
       "severity": null,
       "reason": "Directly answerable from FAQ documentation."
-    }
+    },
+    "customer_email": "mallory@stark.com"
   },
   {
     "id": "E-14",
-    "category": "general",
+    "category": "billing",
     "subject": "Asking for downtime credit",
     "body": "Our site had downtime last week, do we get a credit for that on our Business plan?",
     "expected": {
@@ -179,7 +192,8 @@
       "amount": null,
       "severity": null,
       "reason": "SLA credit requests always require human calculation against incident data, cannot be auto-issued."
-    }
+    },
+    "customer_email": "niaj@wonka.com"
   },
   {
     "id": "E-15",
@@ -192,11 +206,12 @@
       "amount": null,
       "severity": null,
       "reason": "Positive feedback only, no action needed beyond acknowledgment."
-    }
+    },
+    "customer_email": "olivia@acme.io"
   },
   {
     "id": "E-16",
-    "category": "general",
+    "category": "bug",
     "subject": "Vague, low-detail complaint",
     "body": "pls my team no see task fast fix",
     "expected": {
@@ -205,6 +220,7 @@
       "amount": null,
       "severity": null,
       "reason": "Too ambiguous to classify or act on safely; asking a clarifying question is the correct low-risk action rather than guessing or escalating prematurely."
-    }
+    },
+    "customer_email": "peggy@globex.com"
   }
 ]

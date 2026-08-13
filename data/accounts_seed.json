@@ -1,0 +1,18 @@
+[
+  {"account_id": "ACC-1001", "owner_email": "alice@acme.io", "team_members": [], "plan": "starter", "seats_used": 1, "two_factor_enabled": false, "mrr": 9, "created_at": "2025-11-02"},
+  {"account_id": "ACC-1002", "owner_email": "bob@globex.com", "team_members": ["bob2@globex.com"], "plan": "business", "seats_used": 22, "two_factor_enabled": true, "mrr": 79, "created_at": "2025-05-14"},
+  {"account_id": "ACC-1003", "owner_email": "carol@initech.com", "team_members": [], "plan": "pro", "seats_used": 4, "two_factor_enabled": false, "mrr": 29, "created_at": "2026-01-20"},
+  {"account_id": "ACC-1004", "owner_email": "dave@umbrella.co", "team_members": [], "plan": "starter", "seats_used": 1, "two_factor_enabled": false, "mrr": 9, "created_at": "2025-09-08"},
+  {"account_id": "ACC-1005", "owner_email": "erin@wayne.com", "team_members": [], "plan": "pro", "seats_used": 6, "two_factor_enabled": false, "mrr": 29, "created_at": "2025-12-01"},
+  {"account_id": "ACC-1006", "owner_email": "frank@stark.com", "team_members": [], "plan": "business", "seats_used": 18, "two_factor_enabled": true, "mrr": 79, "created_at": "2025-07-19"},
+  {"account_id": "ACC-1007", "owner_email": "owner@wonka.com", "team_members": ["grace@wonka.com"], "plan": "business", "seats_used": 12, "two_factor_enabled": false, "mrr": 79, "created_at": "2025-02-11"},
+  {"account_id": "ACC-1008", "owner_email": "heidi@oscorp.com", "team_members": [], "plan": "pro", "seats_used": 3, "two_factor_enabled": false, "mrr": 29, "created_at": "2025-10-30"},
+  {"account_id": "ACC-1009", "owner_email": "ivan@hooli.com", "team_members": [], "plan": "starter", "seats_used": 1, "two_factor_enabled": false, "mrr": 9, "created_at": "2026-02-04"},
+  {"account_id": "ACC-1010", "owner_email": "judy@piedpiper.com", "team_members": [], "plan": "business", "seats_used": 40, "two_factor_enabled": true, "mrr": 79, "created_at": "2024-11-17"},
+  {"account_id": "ACC-1011", "owner_email": "kevin@aviato.com", "team_members": [], "plan": "pro", "seats_used": 8, "two_factor_enabled": false, "mrr": 29, "created_at": "2025-08-22"},
+  {"account_id": "ACC-1012", "owner_email": "laura@bluth.com", "team_members": [], "plan": "business", "seats_used": 15, "two_factor_enabled": true, "mrr": 79, "created_at": "2025-04-05"},
+  {"account_id": "ACC-1013", "owner_email": "mallory@stark.com", "team_members": [], "plan": "pro", "seats_used": 5, "two_factor_enabled": false, "mrr": 29, "created_at": "2026-03-01"},
+  {"account_id": "ACC-1014", "owner_email": "niaj@wonka.com", "team_members": [], "plan": "business", "seats_used": 20, "two_factor_enabled": true, "mrr": 79, "created_at": "2025-06-09"},
+  {"account_id": "ACC-1015", "owner_email": "olivia@acme.io", "team_members": [], "plan": "pro", "seats_used": 2, "two_factor_enabled": false, "mrr": 29, "created_at": "2025-12-19"},
+  {"account_id": "ACC-1016", "owner_email": "peggy@globex.com", "team_members": [], "plan": "starter", "seats_used": 1, "two_factor_enabled": false, "mrr": 9, "created_at": "2026-01-05"}
+]
